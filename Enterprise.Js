@@ -10,15 +10,28 @@ const employees = [
   { name: 'Anne', salary: 2600, freelancer: true },
 ]
 
+const euros = [29.76, 41.85, 46.5];
+const average = euros.reduce((total, amount, index, array) => {
+  total += amount;
+  if( index === array.length-1) { 
+    return total/array.length;
+  }else { 
+    return total;
+  }
+});
+console.log(average);
+
 //* Hoeveel bedraagt de totale loonkost iedere maand?
 function totalSalaries(employees)
 {
-    let total= 0;
+    let total = employees.reduce((x,y)=> x + y.salary,0);
+   /* 
     employees.forEach(element => {
        
        total += element.salary;
     });
-    return total
+    */
+   return total
 }
 
 assert.equal(totalSalaries(employees), 20652)
@@ -44,6 +57,8 @@ for (let index = 0; index < employees.length; index++)
   return name;
 }
 
+
+
 assert.equal(bestPaidFreelancer(employees), 'Els')
 
 
@@ -66,16 +81,19 @@ assert.deepEqual(earsMoreThan3k(employees), ['Sandra', 'Alexander', 'Els'])
 //* Hoeveel verdient een interne medewerker gemiddeld?
 function averageSalaryNonFreeLancer(employees) 
 {
-let average = 0;
-sum = 0;
-employees.forEach(element => 
-{ if (element.freelancer == false) {
+// let average = 0;
+// sum = 0;
+// employees.forEach(element => 
+// { if (element.freelancer == false) 
+// {
     
-    average += element.salary;
-    sum++;
-}
-});
-return average / sum;
+//     average += element.salary;
+//     sum++;
+// }
+// });
+// return average / sum;
+let average = employees.filter(x => x.freelancer == false).reduce((x,y)=> x + y.salary,0) / employees.filter(x => x.freelancer == false).length
+return average;
 }
 
 assert.equal(averageSalaryNonFreeLancer(employees), 3134)
